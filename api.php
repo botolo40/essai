@@ -1,8 +1,9 @@
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 <?php
 // api.php - API REST pour les produits
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *'); // Pour autoriser les requêtes depuis index.html
 header('Access-Control-Allow-Methods: GET, POST');
