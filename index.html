@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Accueil boutique</title>
+    <style>
+        /* Vos styles existants, inchangés */
+        body, html {
+            padding: 0;
+            margin: 0;
+            font-family: sans-serif;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #title {
+            width: 100%;
+            height: 350px;
+            background: #E6C200;
+            color: white;
+            font-size: 40px;
+            position: relative;
+            bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            border: 1px solid #ccc;
+            background: none;
+            text-align: center;
+            border-radius: 20px;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+
+        .product {
+            width: 280px;
+            border-radius: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            padding: 10px;
+            background: white;
+            margin-bottom: 20px;
+        }
+
+        .img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .price {
+            font-weight: bold;
+            font-size: 20px;
+            margin: 5px 0;
+        }
+
+        #menu {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        #nav {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 10px;
+            background: white;
+            text-align: center;
+            width: 200px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            z-index: 999;
+            padding: 10px;
+        }
+
+        .btn_com {
+            background: red;
+            width: 90px;
+            border: 1px solid red;
+            text-align: center;
+            border-radius: 15px;
+            height: 30px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            float: right;
+            margin-top: 10px;
+        }
+
+        .notification-bell {
+            position: relative;
+            display: inline-block;
+            font-size: 24px;
+            cursor: pointer;
+            left: 20px;
+            top: 10px;
+        }
+
+        .fa-bell {
+            color: #333;
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: red;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 50%;
+            min-width: 12px;
+            height: 12px;
+            text-align: center;
+            line-height: 12px;
+        }
+
+        /* Formulaire d'upload */
+        .upload-form {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .upload-form h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .upload-form input, .upload-form button {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        .upload-form button {
+            background: #E6C200;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+        .upload-form button:hover {
+            background: #ccaa00;
+        }
+
+        /* Grille des produits */
+        section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Message d'erreur */
+        .error-message {
+            color: red;
+            text-align: center;
+            padding: 20px;
+            background: #ffeeee;
+            border-radius: 10px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <br><br><br>
+        <div>
+            <div class="notification-bell" onclick="window.location.href='notification.html'">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+            </div>
+            <span id="menu" onclick="show()">&#x2630</span>
+        </div>
+        <nav id="nav">
+            <br>
+            <span>Partager</span>
+            <br><br>
+            <span>Connexion</span>
+        </nav>
+
+        <div id="title">
+            ACHETEZ NOS PRODUITS EXCEPTIONNELS
+        </div>
+    </header>
+
+    <main>
+        <!-- Formulaire d'upload -->
+        <div class="upload-form">
+            <h3>➕ Ajouter un produit</h3>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="text" name="nom" placeholder="Nom du produit" required>
+                <input type="number" step="0.01" name="prix" placeholder="Prix (€)" required>
+                <input type="file" name="image" accept="image/*" required>
+                <button type="submit">Publier le produit</button>
+            </form>
+            <div id="uploadStatus" style="text-align:center; margin-top:10px;"></div>
+        </div>
+
+        <br><br>
+        <!-- Filtres -->
+        <div class="options">
+            <button class="btn">vêtements</button>
+            <button class="btn">chaussures</button>
+        </div>
+        <br>
+        <div class="options">  
+            <button class="btn">electronic</button>
+            <button class="btn">accesoires</button>
+        </div>
+        <br><br><br><br><br>
+
+        <!-- Liste des produits -->
+        <section id="product-list">
+            <p style="text-align:center;">Chargement...</p>
+        </section>
+        <br><br>
+    </main>
+    <br><br><br>
+
+    <script>
+        // Menu hamburger
+        function show() {
+            const nav = document.getElementById('nav');
+            nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+        }
+
+        window.onclick = function(event) {
+            const nav = document.getElementById('nav');
+            const menu = document.getElementById('menu');
+            if (event.target !== menu && !menu.contains(event.target) && nav.style.display === 'block') {
+                nav.style.display = 'none';
+            }
+        };
+
+        // Charger les produits
+        async function loadProducts() {
+            try {
+                const response = await fetch('api.php');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const products = await response.json();
+                const container = document.getElementById('product-list');
+                container.innerHTML = '';
+
+                // Si c'est une erreur retournée par l'API
+                if (products.error) {
+                    container.innerHTML = `<div class="error-message">Erreur: ${products.error}<br>Détails: ${products.details || ''}</div>`;
+                    return;
+                }
+
+                if (products.length === 0) {
+                    container.innerHTML = '<p style="text-align:center;">Aucun produit pour le moment. Utilisez le formulaire ci-dessus pour en ajouter.</p>';
+                    return;
+                }
+
+                products.forEach(product => {
+                    const div = document.createElement('div');
+                    div.className = 'product';
+                    div.innerHTML = `
+                        <img src="${product.chemin_image}" alt="${product.nom}" class="img" onerror="this.src='https://via.placeholder.com/300?text=Image+non+trouvée'">
+                        <br><strong>${product.nom}</strong>
+                        <button class="btn_com">Ajouter</button>
+                        <p class="price">${parseFloat(product.prix).toFixed(2)}€</p>
+                    `;
+                    container.appendChild(div);
+                });
+            } catch (error) {
+                console.error('Erreur de chargement:', error);
+                document.getElementById('product-list').innerHTML = `
+                    <div class="error-message">
+                        <strong>Impossible de charger les produits</strong><br>
+                        Vérifiez que :<br>
+                        1. Le serveur est bien lancé (XAMPP/WAMP)<br>
+                        2. Le fichier api.php est accessible<br>
+                        3. La base de données est bien créée<br>
+                        <br>
+                        Erreur: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        // Gestion de l'upload
+        document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const statusDiv = document.getElementById('uploadStatus');
+            statusDiv.innerHTML = 'Envoi en cours...';
+            statusDiv.style.color = 'blue';
+
+            try {
+                const response = await fetch('api.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    statusDiv.innerHTML = '✅ Produit ajouté avec succès !';
+                    statusDiv.style.color = 'green';
+                    this.reset();
+                    loadProducts(); // Recharger la liste
+                    
+                    // Effacer le message après 3 secondes
+                    setTimeout(() => {
+                        statusDiv.innerHTML = '';
+                    }, 3000);
+                } else {
+                    statusDiv.innerHTML = `❌ Erreur: ${result.error || 'Inconnue'}`;
+                    statusDiv.style.color = 'red';
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `❌ Erreur réseau: ${error.message}`;
+                statusDiv.style.color = 'red';
+            }
+        });
+
+        // Chargement initial
+        loadProducts();
+
+        // Recharger les produits toutes les 30 secondes (optionnel)
+        setInterval(loadProducts, 30000);
+    </script>
+</body>
+</html>
