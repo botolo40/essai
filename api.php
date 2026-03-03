@@ -1,3 +1,6 @@
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 <?php
 // api.php - API REST pour les produits
 header('Content-Type: application/json');
